@@ -1,125 +1,135 @@
-import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Button } from 'react-native';
-import { createStackNavigator } from '@react-navigation/stack';
+import * as React from 'react';
+import { StyleSheet, View, ScrollView } from 'react-native';
+import { Card, Text } from 'react-native-elements'
 
-class InfoScreen extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      id: '',
-      password: ''
-    };
-  }
+import Colors from '../constants/Colors';
 
-  render() {
+function Candidate(props) {
+  return (
+    // <View style={styles.margin}>
+    //     <Text h4 style={[styles.candidateTitle]}>{props.nombre}</Text>
+    //     <View>
+    //       <Text><Text style={styles.bold}>Nombre:  </Text>{props.nombre}</Text>
+    //       <Text><Text style={styles.bold}>Numero:  </Text>{props.numero}</Text>
+    //       <Text><Text style={styles.bold}>partido:  </Text>{props.partido}</Text>
+    //       <Text><Text style={styles.bold}>Antecedentes:  </Text>{props.antecedentes}</Text>
+    //       <Text><Text style={styles.bold}>Propuestas:  </Text>{props.propuestas}</Text>
+    //     </View>
+    // </View>
+
+      <Card title={props.nombre}>
+      {
+        <View>
+          <Text><Text style={styles.bold}>Nombre:  </Text>{props.nombre}</Text>
+          <Text><Text style={styles.bold}>Numero:  </Text>{props.numero}</Text>
+          <Text><Text style={styles.bold}>partido:  </Text>{props.partido}</Text>
+          <Text><Text style={styles.bold}>Antecedentes:  </Text>{props.antecedentes}</Text>
+          <Text><Text style={styles.bold}>Propuestas:  </Text>{props.propuestas}</Text>
+        </View>
+      }
+      </Card>
+    )
+}
+
+export default function InfoScreen() {
+  const list = candidates.map((item, index) => {
     return (
-      <View style={styles.container}>
-        <Text style={styles.logo}>GRDN</Text>
-        <View style={styles.inputView} >
-          <TextInput  
-            style={styles.inputText}
-            placeholder="Número de identificación" 
-            placeholderTextColor="#003f5c"
-            onChangeText={text => this.setState({id:text})}
-            idValue = {this.state.id}
-          />
-        </View>
-        <View style={styles.inputView} >
-          <TextInput  
-            secureTextEntry
-            style={styles.inputText}
-            placeholder="Contraseña" 
-            placeholderTextColor="#003f5c"
-            onChangeText={text => this.setState({password:text})}
-            pswValue = {this.state.password}
-          />
-        </View>
-        <TouchableOpacity>
-          <Text style={styles.forgot}>¿Olvidó su contraseña?</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.loginBtn} onPress={() => navigation.navigate('Index')}>
-          <Text style={styles.loginText}>Iniciar Sesión</Text>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Text style={styles.signupText}>Registrarse</Text>
-        </TouchableOpacity>
-  
-  
-      </View>
-    );
-  }
-}
-
-function Info({ navigation }) {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Info screen</Text>
-      <Button
-        title="Go to Details"
-        onPress={() => navigation.navigate('Login')}
+      <Candidate id={item['id']} 
+                nombre={item['nombre']} 
+                numero={item['numero']} 
+                partido={item['partido']} 
+                antecedentes={item['antecedentes']} 
+                propuestas={item['propuestas']} 
       />
-    </View>
-  );
-}
-
-const InfoStack = createStackNavigator();
-
-function InfoStackScreen() {
+    )
+  })
   return (
-    <InfoStack.Navigator screenOptions={{ headerShown: false }}>
-      <InfoStack.Screen name="Login" component={InfoScreen} />
-      <InfoStack.Screen name="Index" component={Info} />
-    </InfoStack.Navigator>
+    <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+      {list}
+    </ScrollView>
+    
   );
 }
+  
+  const styles = StyleSheet.create({
+    container: {
+      // padding: 20,
+    },
+    containerScroll: {
+      backgroundColor: "white",
+    },
+    bold: {
+      fontWeight: "bold"
+    },
+    candidateTitle: {
+      textAlign: "center",
+      textDecorationLine: "underline",
+      // backgroundColor: Colors.secondary,
+    },
+    margin: {
+      padding: 20,
+      borderWidth: 5,
+      borderTopLeftRadius: 20,
+      borderTopRightRadius: 20,
+      borderBottomLeftRadius: 20,
+      borderBottomRightRadius: 20,
+      marginBottom: 10
+    }
+  });
 
-export default InfoStackScreen;
-
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+candidates = [
+  {
+    id: 1,
+    nombre: "How I met your mother",
+    nacimiento: new Date(),
+    numero: 5,
+    partido: "CBS",
+    antecedentes: "Es muy charra, mejor serie de la vida",
+    propuestas: "Contarle a los hijos la historia de como conoció la esposa para preguntar si puede salir con alguien mas"
   },
-  logo:{
-    fontWeight:"bold",
-    fontSize:50,
-    color:"#1F007E",
-    marginBottom:40
+  {
+    id: 2,
+    nombre: "Game Of Thrones",
+    nacimiento: new Date(),
+    numero: 100,
+    partido: "HBO",
+    antecedentes: "Es inigualable",
+    propuestas: "Mostrar el conflicto entre poderes en un mundo medieval"
   },
-  inputView:{
-    width:"80%",
-    backgroundColor:"#ededed",
-    borderRadius:25,
-    height:50,
-    marginBottom:20,
-    justifyContent:"center",
-    padding:20
+  {
+    id: 3,
+    nombre: "MR. Robot",
+    nacimiento: new Date(),
+    numero: 9,
+    partido: "Usa network",
+    antecedentes: "Es muy tecnologica y psicologica",
+    propuestas: "Hacerte creer una cosa para despues explotarte la mente"
   },
-  inputText:{
-    height:50,
-    color:"black"
+  {
+    id: 4, 
+    nombre: "Greys Anatomy", 
+    nacimiento: new Date(),
+    numero: 17,
+    partido: "ABC",
+    antecedentes: "Es infinita",
+    propuestas: "Hacer que te enamores de un personaje para luego matarlo"
   },
-  forgot:{
-    color:"black",
-    fontSize:11
+  {
+    id: 5,
+    nombre: "The Crown",
+    nacimiento: new Date(),
+    numero: 13,
+    partido: "ABC Studios",
+    antecedentes: "Es muy educativa",
+    propuestas: "Enseñar sobre la historia de inglaterra y empoderar a la mujer"
   },
-  loginBtn:{
-    width:"80%",
-    backgroundColor:"#1F007E",
-    borderRadius:25,
-    height:50,
-    alignItems:"center",
-    justifyContent:"center",
-    marginTop:40,
-    marginBottom:10
-  },
-  loginText:{
-    color:"white"
-  },
-  signupText:{
-    color:"black"
+  {
+    id: 6, 
+    nombre: "13 Reasons Why",
+    nacimiento: new Date(),
+    numero: 66,
+    partido: "Eskmo",
+    antecedentes: "Es plenamente psicologica y depresiva",
+    propuestas: "Mostrar la historia de una mujer que fue demasiado bullyniada"
   }
-});
+]

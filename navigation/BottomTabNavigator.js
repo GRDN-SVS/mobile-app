@@ -20,7 +20,7 @@ export default function BottomTabNavigator({ navigation, route }) {
         name="Info"
         component={InfoScreen}
         options={{
-          title: 'Info page',
+          title: 'Información',
           tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-book" />,
         }}
       />
@@ -28,7 +28,7 @@ export default function BottomTabNavigator({ navigation, route }) {
         name="Results"
         component={ResultsScreen}
         options={{
-          title: 'Results',
+          title: 'Resultados',
           tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-analytics" />,
         }}
       />
@@ -36,7 +36,7 @@ export default function BottomTabNavigator({ navigation, route }) {
         name="Register"
         component={RegisterScreen}
         options={{
-          title: 'Register',
+          title: 'Registro',
           tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-clipboard" />,
         }}
       />

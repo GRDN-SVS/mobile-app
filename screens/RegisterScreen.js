@@ -1,74 +1,63 @@
 import * as React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import * as WebBrowser from 'expo-web-browser';
-import { RectButton, ScrollView } from 'react-native-gesture-handler';
+import { StyleSheet, Text, View, TouchableHighlight } from 'react-native';
 
-export default function RegisterScreen() {
-    return (
-      <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-        <OptionButton
-          icon="md-school"
-          label="Read the Expo documentation"
-          onPress={() => WebBrowser.openBrowserAsync('https://docs.expo.io')}
-        />
-  
-        <OptionButton
-          icon="md-compass"
-          label="Read the React Navigation documentation"
-          onPress={() => WebBrowser.openBrowserAsync('https://reactnavigation.org')}
-        />
-  
-        <OptionButton
-          icon="ios-chatboxes"
-          label="Ask a question on the forums"
-          onPress={() => WebBrowser.openBrowserAsync('https://forums.expo.io')}
-          isLastOption
-        />
-      </ScrollView>
-    );
+import User from '../models/user';
+import { options } from '../models/user';
+import Colors from '../constants/Colors';
+
+var t = require('tcomb-form-native')
+
+var Form = t.form.Form;
+ 
+export default class RegisterScreen extends React.Component {
+
+  register = async () => {
+    try {
+      // here place your signup logic
+      const value = this._form.getValue();
+      console.log('value: ', value)
+      console.log('user successfully signed up!: ')
+    } catch (err) {
+      console.log('error signing up: ', err)
+    }
   }
-  
-  function OptionButton({ icon, label, onPress, isLastOption }) {
+
+  render() {
     return (
-      <RectButton style={[styles.option, isLastOption && styles.lastOption]} onPress={onPress}>
-        <View style={{ flexDirection: 'row' }}>
-          <View style={styles.optionIconContainer}>
-            <Ionicons name={icon} size={22} color="rgba(0,0,0,0.35)" />
-          </View>
-          <View style={styles.optionTextContainer}>
-            <Text style={styles.optionText}>{label}</Text>
-          </View>
-        </View>
-      </RectButton>
-    );
+      <View style={styles.container}>
+        <Form
+          ref={res => this._form = res}
+          type={User}
+          options={options}
+        />
+        <TouchableHighlight style={styles.button} onPress={this.register} underlayColor='#99d9f4'>
+          <Text style={styles.buttonText}>Registrarse</Text>
+        </TouchableHighlight>
+      </View>
+    )
   }
-  
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#fafafa',
-    },
-    contentContainer: {
-      paddingTop: 15,
-    },
-    optionIconContainer: {
-      marginRight: 12,
-    },
-    option: {
-      backgroundColor: '#fdfdfd',
-      paddingHorizontal: 15,
-      paddingVertical: 15,
-      borderWidth: StyleSheet.hairlineWidth,
-      borderBottomWidth: 0,
-      borderColor: '#ededed',
-    },
-    lastOption: {
-      borderBottomWidth: StyleSheet.hairlineWidth,
-    },
-    optionText: {
-      fontSize: 15,
-      alignSelf: 'flex-start',
-      marginTop: 1,
-    },
-  });
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+    justifyContent: 'center',
+    backgroundColor: 'white',
+  },
+  buttonText: {
+    fontSize: 18,
+    color: 'white',
+    alignSelf: 'center'
+  },
+  button: {
+    height: 36,
+    backgroundColor: Colors.secondary,
+    borderColor: Colors.secondary,
+    borderWidth: 1,
+    borderRadius: 8,
+    marginBottom: 10,
+    alignSelf: 'stretch',
+    justifyContent: 'center'
+  }
+})
