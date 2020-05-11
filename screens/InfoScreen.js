@@ -34,7 +34,8 @@ function Candidate(props) {
 export default function InfoScreen() {
   const list = candidates.map((item, index) => {
     return (
-      <Candidate id={item['id']} 
+      <Candidate key={index} 
+                id={item['id']} 
                 nombre={item['nombre']} 
                 numero={item['numero']} 
                 partido={item['partido']} 
