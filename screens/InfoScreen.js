@@ -6,17 +6,6 @@ import Colors from '../constants/Colors';
 
 function Candidate(props) {
   return (
-    // <View style={styles.margin}>
-    //     <Text h4 style={[styles.candidateTitle]}>{props.nombre}</Text>
-    //     <View>
-    //       <Text><Text style={styles.bold}>Nombre:  </Text>{props.nombre}</Text>
-    //       <Text><Text style={styles.bold}>Numero:  </Text>{props.numero}</Text>
-    //       <Text><Text style={styles.bold}>partido:  </Text>{props.partido}</Text>
-    //       <Text><Text style={styles.bold}>Antecedentes:  </Text>{props.antecedentes}</Text>
-    //       <Text><Text style={styles.bold}>Propuestas:  </Text>{props.propuestas}</Text>
-    //     </View>
-    // </View>
-
       <Card title={props.nombre}>
       {
         <View>
