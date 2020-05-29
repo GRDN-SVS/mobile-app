@@ -1,8 +1,10 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, View, ScrollView } from 'react-native';
 import { Card, Text } from 'react-native-elements'
 
 import Colors from '../constants/Colors';
+import { API_URL } from '../env';
+import * as axios from 'react-native-axios'
 
 function Candidate(props) {
   return (
@@ -21,24 +23,46 @@ function Candidate(props) {
 }
 
 export default function InfoScreen() {
-  const list = candidates.map((item, index) => {
+
+  const [options, setOptions] = useState(null);
+  const [optionsRequested, setOptionsRequested] = useState(false);
+  
+  if (!optionsRequested) {
+    getOptions()
+  }
+
+  function getOptions() {
+    axios.get(`${API_URL}/grdn/api/election/getOptions`)
+      .then(function(result) {
+        setOptions(result.data);
+        return setOptionsRequested(true);
+      })
+  }
+
+  if (options != null && optionsRequested) {
+    const list = options.map((item, index) => {
+      return (
+        <Candidate key={index} 
+                  id={item['option_id']} 
+                  nombre={item['name']} 
+                  numero={item['number']} 
+                  partido={item['party']} 
+                  antecedentes={item['background']} 
+                  propuestas={item['proposals']} 
+        />
+      )
+    })
     return (
-      <Candidate key={index} 
-                id={item['id']} 
-                nombre={item['nombre']} 
-                numero={item['numero']} 
-                partido={item['partido']} 
-                antecedentes={item['antecedentes']} 
-                propuestas={item['propuestas']} 
-      />
+      <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+        {list}
+      </ScrollView>
+    );
+  }
+  else {
+    return (
+      <View></View>
     )
-  })
-  return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-      {list}
-    </ScrollView>
-    
-  );
+  }
 }
   
   const styles = StyleSheet.create({

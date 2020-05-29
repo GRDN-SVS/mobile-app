@@ -8,6 +8,8 @@
 .expo
 __generated__
 
+web-build/
+
 ### ReactNative.Buck Stack ###
 buck-out/
 .buckconfig.local
