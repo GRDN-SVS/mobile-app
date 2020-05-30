@@ -4,6 +4,8 @@ import { StyleSheet, Text, View, TouchableHighlight } from 'react-native';
 import User from '../models/user';
 import { options } from '../models/user';
 import Colors from '../constants/Colors';
+import { API_URL } from '../env';
+import * as axios from 'react-native-axios'
 
 var t = require('tcomb-form-native')
 
@@ -11,15 +13,28 @@ var Form = t.form.Form;
  
 export default class RegisterScreen extends React.Component {
 
-  register = async () => {
-    try {
-      // here place your signup logic
+  constructor(props) {
+    super(props);
+    this.state = {value: null};
+  }
+
+  register = () => {
       const value = this._form.getValue();
-      console.log('value: ', value)
-      console.log('user successfully signed up!: ')
-    } catch (err) {
-      console.log('error signing up: ', err)
-    }
+
+      axios.post(`${API_URL}/grdn/api/blockchain/registerVoter`, {
+        voterId: value.id,
+        registrarId: 1,
+        firstName: value.name,
+        lastName: value.surname
+      })
+      .then(function(response) {
+        if (response['error'] == undefined) {
+          console.log('user successfully signed up!: ')
+        }
+      })
+      .catch(function (error) {
+        console.log('error signing up: ', error);
+      });
   }
 
   render() {
