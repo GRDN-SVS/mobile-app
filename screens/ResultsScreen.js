@@ -24,8 +24,6 @@ export default function ResultsScreen() {
   function init() {
     if (chartData == null && chart == null) {
       getResults();
-      // console.log(chartData)
-      // setChart(Chart())
     }
   }
 
@@ -59,8 +57,8 @@ export default function ResultsScreen() {
                   }
               });
             }
-            results.values.push(option.results);
-            numVotes += option.results;
+            results.values.push(option.result);
+            numVotes += option.result;
           });
   
           chartData = results.keys.map((key, index) => {
@@ -71,7 +69,6 @@ export default function ResultsScreen() {
               onPress: () => selectedSlice({ selectedSlice: { label: key, value: results.values[index] } } )
             }
           })
-          console.log("Hola", chartData)
           setChart(Chart())
         }));
     }

@@ -1,1 +1,1 @@
-export const API_URL = 'https://42670fd9d661.ngrok.io';
+export const API_URL = 'https://guardian-api.tk';
